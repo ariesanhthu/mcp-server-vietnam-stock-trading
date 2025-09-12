@@ -1,5 +1,11 @@
 # VNStock MCP Server (Không chính thức)
 
+[![Test Status](https://img.shields.io/badge/tests-passing-brightgreen?style=flat-square)](https://gitea.maobui.com/hypersense/vnstock-mcp-server/actions)
+[![PyPI version](https://img.shields.io/pypi/v/vnstock-mcp-server?style=flat-square)](https://pypi.org/project/vnstock-mcp-server/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/vnstock-mcp-server?style=flat-square)](https://pypi.org/project/vnstock-mcp-server/)
+[![Python versions](https://img.shields.io/pypi/pyversions/vnstock-mcp-server?style=flat-square)](https://pypi.org/project/vnstock-mcp-server/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+
 Một MCP (Model Context Protocol) server **không chính thức** cung cấp các công cụ để truy cập dữ liệu thị trường chứng khoán Việt Nam. Đây là một wrapper xung quanh thư viện [vnstock](https://github.com/thinh-vu/vnstock) tuyệt vời của [@thinh-vu](https://github.com/thinh-vu).
 
 > **Lưu ý**: Đây là một dự án độc lập và không liên kết chính thức với thư viện vnstock hoặc các nhà phát triển của nó.
@@ -128,7 +134,10 @@ Thêm một server entry trong cấu hình MCP của bạn:
 {
   "mcpServers": {
     "vnstock": {
-      "command": "vnstock-mcp-server"
+      "command": "uvx",
+      "args": [
+        "vnstock-mcp-server"
+      ]
     }
   }
 }
@@ -139,12 +148,22 @@ Thêm một server entry trong cấu hình MCP của bạn:
 {
   "mcpServers": {
     "vnstock-sse": {
-      "command": "vnstock-mcp-server",
-      "args": ["--transport", "sse", "--mount-path", "/vnstock"]
+      "command": "uvx",
+      "args": [
+        "vnstock-mcp-server",
+        "--transport",
+        "sse",
+        "--mount-path",
+        "/vnstock"
+      ]
     },
     "vnstock-http": {
-      "command": "vnstock-mcp-server", 
-      "args": ["--transport", "streamable-http"]
+      "command": "uvx",
+      "args": [
+        "vnstock-mcp-server",
+        "--transport",
+        "streamable-http"
+      ]
     }
   }
 }

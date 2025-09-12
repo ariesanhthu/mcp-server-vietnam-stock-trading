@@ -1,10 +1,9 @@
 # VNStock MCP Server (Unofficial)
 
-[![Test Status](https://img.shields.io/badge/tests-passing-brightgreen?style=flat-square)](https://git.hyper-sense.dev/maobui/vnstock-mcp-server/actions)
+[![Test Status](https://img.shields.io/badge/tests-passing-brightgreen?style=flat-square)](https://gitea.maobui.com/hypersense/vnstock-mcp-server/actions)
 [![PyPI version](https://img.shields.io/pypi/v/vnstock-mcp-server?style=flat-square)](https://pypi.org/project/vnstock-mcp-server/)
 [![PyPI downloads](https://img.shields.io/pypi/dm/vnstock-mcp-server?style=flat-square)](https://pypi.org/project/vnstock-mcp-server/)
 [![Python versions](https://img.shields.io/pypi/pyversions/vnstock-mcp-server?style=flat-square)](https://pypi.org/project/vnstock-mcp-server/)
-[![Coverage](https://img.shields.io/codecov/c/github/HyperSense/vnstock-mcp-server?style=flat-square)](https://codecov.io/gh/HyperSense/vnstock-mcp-server)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 An **unofficial** MCP (Model Context Protocol) server that provides tools to access Vietnam stock market data. This is a wrapper around the excellent [vnstock](https://github.com/thinh-vu/vnstock) library by [@thinh-vu](https://github.com/thinh-vu).
@@ -135,7 +134,10 @@ Add a server entry in your MCP configuration:
 {
   "mcpServers": {
     "vnstock": {
-      "command": "vnstock-mcp-server"
+      "command": "uvx",
+      "args": [
+        "vnstock-mcp-server"
+      ]
     }
   }
 }
@@ -146,12 +148,22 @@ Add a server entry in your MCP configuration:
 {
   "mcpServers": {
     "vnstock-sse": {
-      "command": "vnstock-mcp-server",
-      "args": ["--transport", "sse", "--mount-path", "/vnstock"]
+      "command": "uvx",
+      "args": [
+        "vnstock-mcp-server",
+        "--transport",
+        "sse",
+        "--mount-path",
+        "/vnstock"
+      ]
     },
     "vnstock-http": {
-      "command": "vnstock-mcp-server", 
-      "args": ["--transport", "streamable-http"]
+      "command": "uvx",
+      "args": [
+        "vnstock-mcp-server",
+        "--transport",
+        "streamable-http"
+      ]
     }
   }
 }
