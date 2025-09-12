@@ -30,11 +30,22 @@ jobs:
 
     - name: Run tests with coverage
       run: |
-        uv run pytest --cov=src/vnstock_mcp --cov-report=xml --cov-report=term-missing
+        uv run pytest --cov=src/vnstock_mcp --cov-report=xml --cov-report=term-missing --cov-report=html
+
+    - name: List coverage files (debug)
+      run: |
+        ls -la coverage.xml || echo "coverage.xml not found"
+        ls -la htmlcov/ || echo "htmlcov directory not found"
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       if: matrix.python-version == '3.11'
       with:
         file: ./coverage.xml
+        token: ${{ secrets.CODECOV_TOKEN }}
+        slug: HyperSense/vnstock-mcp-server
+        name: codecov-umbrella
         fail_ci_if_error: false
+        verbose: true
+        flags: unittests
+        env_vars: OS,PYTHON
