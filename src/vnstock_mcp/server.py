@@ -11,6 +11,8 @@ from mcp.server.fastmcp import FastMCP
 import pandas as pd
 from typing import Literal
 from datetime import datetime
+import argparse
+import sys
 
 server = FastMCP('VNStock MCP Server')
 
@@ -688,7 +690,67 @@ def get_price_board(symbols: list[str], output_format: Literal['json', 'datafram
 
 def main():
     """Main entry point for the vnstock-mcp-server CLI."""
-    server.run()
+    parser = argparse.ArgumentParser(
+        description='VNStock MCP Server - Vietnam Stock Market Data Access via MCP',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+            Examples:
+            %(prog)s                              # Run with default stdio transport
+            %(prog)s --transport stdio            # Explicitly use stdio transport
+            %(prog)s --transport sse              # Use Server-Sent Events transport
+            %(prog)s --transport sse --mount-path /vnstock  # SSE with custom mount path
+            %(prog)s --transport streamable-http  # Use HTTP streaming transport
+            
+            Transport Modes:
+            stdio          : Standard input/output (default, for MCP clients like Claude Desktop)
+            sse            : Server-Sent Events (for web applications)
+            streamable-http: HTTP streaming (for HTTP-based integrations)
+        """
+    )
+    
+    parser.add_argument(
+        '--transport', '-t',
+        choices=['stdio', 'sse', 'streamable-http'],
+        default='stdio',
+        help='Transport protocol to use (default: stdio)'
+    )
+    
+    parser.add_argument(
+        '--mount-path', '-m',
+        type=str,
+        default=None,
+        help='Mount path for SSE transport (optional, used only with --transport sse)'
+    )
+    
+    parser.add_argument(
+        '--version', '-v',
+        action='version',
+        version='%(prog)s 1.0.0'
+    )
+    
+    try:
+        args = parser.parse_args()
+        
+        # Validate arguments
+        if args.transport == 'sse' and args.mount_path is None:
+            print("Warning: Using SSE transport without mount-path. Default mount path will be used.", file=sys.stderr)
+        
+        if args.transport != 'sse' and args.mount_path is not None:
+            print("Warning: --mount-path is only used with SSE transport. Ignoring mount-path.", file=sys.stderr)
+        
+        # Run server with specified transport
+        print(f"Starting VNStock MCP Server with {args.transport} transport...", file=sys.stderr)
+        if args.transport == 'sse' and args.mount_path:
+            print(f"SSE mount path: {args.mount_path}", file=sys.stderr)
+        
+        server.run(transport=args.transport, mount_path=args.mount_path)
+        
+    except KeyboardInterrupt:
+        print("\nServer stopped by user.", file=sys.stderr)
+        sys.exit(0)
+    except Exception as e:
+        print(f"Error starting server: {e}", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

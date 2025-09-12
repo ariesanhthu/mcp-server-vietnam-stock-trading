@@ -28,9 +28,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/maobui/vnstock-mcp-server"
-Repository = "https://github.com/maobui/vnstock-mcp-server"
-Issues = "https://github.com/maobui/vnstock-mcp-server/issues"
+Homepage = "https://github.com/MaoBui2907/vnstock-mcp-server"
+Repository = "https://github.com/MaoBui2907/vnstock-mcp-server"
+Issues = "https://github.com/MaoBui2907/vnstock-mcp-server"
 
 [project.scripts]
 vnstock-mcp-server = "vnstock_mcp.server:main"
