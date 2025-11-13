@@ -13,6 +13,7 @@ from typing import Literal
 from datetime import datetime
 import argparse
 import sys
+import os
 
 server = FastMCP("VNStock MCP Server")
 
@@ -823,13 +824,22 @@ def main():
                 file=sys.stderr,
             )
 
+        # Get host and port from environment variables (for cloud deployment)
+        # Default to 0.0.0.0 for cloud compatibility (Render, etc.)
+        host = os.environ.get("HOST", "0.0.0.0")
+        port = int(os.environ.get("PORT", 8000))
+
         # Run server with specified transport
         print(
-            f"Starting VNStock MCP Server with {args.transport} transport...",
+            f"Starting VNStock MCP Server with {args.transport} transport on {host}:{port}...",
             file=sys.stderr,
         )
         if args.transport == "sse" and args.mount_path:
             print(f"SSE mount path: {args.mount_path}", file=sys.stderr)
+
+        # FastMCP uses uvicorn internally, set environment variables for uvicorn
+        os.environ["HOST"] = host
+        os.environ["PORT"] = str(port)
 
         server.run(transport=args.transport, mount_path=args.mount_path)
 

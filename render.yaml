@@ -10,6 +10,8 @@ services:
     envVars:
       - key: TRANSPORT
         value: streamable-http
+      - key: HOST
+        value: 0.0.0.0
       - key: PORT
         value: 8000
     healthCheckPath: /
