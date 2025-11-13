@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: vnstock-mcp-server
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: starter
+    buildCommand: "uv sync"
+    startCommand: uv run python -m vnstock_mcp.server --transport streamable-http
+    envVars:
+      - key: TRANSPORT
+        value: streamable-http
+      - key: PORT
+        value: 8000
+    healthCheckPath: /
+    healthCheckGracePeriod: 40

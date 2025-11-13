@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  vnstock-mcp-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vnstock-mcp-server-http
+    ports:
+      - "8000:8000"
+    environment:
+      - TRANSPORT=streamable-http
+    command: vnstock-mcp-server --transport streamable-http
+    restart: always
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "vnstock-mcp-server"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+    networks:
+      - vnstock-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  vnstock-network:
+    driver: bridge
+

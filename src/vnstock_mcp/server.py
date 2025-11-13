@@ -14,12 +14,15 @@ from datetime import datetime
 import argparse
 import sys
 
-server = FastMCP('VNStock MCP Server')
+server = FastMCP("VNStock MCP Server")
 
 ##### Company Tools #####
 
+
 @server.tool()
-def get_company_overview(symbol: str, output_format: Literal['json', 'dataframe'] = 'json'):
+def get_company_overview(
+    symbol: str, output_format: Literal["json", "dataframe"] = "json"
+):
     """
     Get company overview from stock market
     Args:
@@ -30,13 +33,19 @@ def get_company_overview(symbol: str, output_format: Literal['json', 'dataframe'
     """
     equity = TCBSCompany(symbol=symbol)
     df = equity.overview()
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_company_news(symbol: str, page_size: int = 10, page: int = 0, output_format: Literal['json', 'dataframe'] = 'json'):
+def get_company_news(
+    symbol: str,
+    page_size: int = 10,
+    page: int = 0,
+    output_format: Literal["json", "dataframe"] = "json",
+):
     """
     Get company news from stock market
     Args:
@@ -49,13 +58,19 @@ def get_company_news(symbol: str, page_size: int = 10, page: int = 0, output_for
     """
     equity = TCBSCompany(symbol=symbol)
     df = equity.news(page_size=page_size, page=page)
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_company_events(symbol: str, page_size: int = 10, page: int = 0, output_format: Literal['json', 'dataframe'] = 'json'):
+def get_company_events(
+    symbol: str,
+    page_size: int = 10,
+    page: int = 0,
+    output_format: Literal["json", "dataframe"] = "json",
+):
     """
     Get company events from stock market
     Args:
@@ -68,13 +83,16 @@ def get_company_events(symbol: str, page_size: int = 10, page: int = 0, output_f
     """
     equity = TCBSCompany(symbol=symbol)
     df = equity.events(page_size=page_size, page=page)
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_company_shareholders(symbol: str, output_format: Literal['json', 'dataframe'] = 'json'):
+def get_company_shareholders(
+    symbol: str, output_format: Literal["json", "dataframe"] = "json"
+):
     """
     Get company shareholders from stock market
     Args:
@@ -85,13 +103,18 @@ def get_company_shareholders(symbol: str, output_format: Literal['json', 'datafr
     """
     equity = TCBSCompany(symbol=symbol)
     df = equity.shareholders()
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_company_officers(symbol: str, filter_by: Literal['working', "all", 'resigned']= 'working', output_format: Literal['json', 'dataframe'] = 'json'):  # pyright: ignore[reportUndefinedVariable]  # noqa: E501
+def get_company_officers(
+    symbol: str,
+    filter_by: Literal["working", "all", "resigned"] = "working",
+    output_format: Literal["json", "dataframe"] = "json",
+):  # pyright: ignore[reportUndefinedVariable]  # noqa: E501
     """
     Get company officers from stock market
     Args:
@@ -103,13 +126,18 @@ def get_company_officers(symbol: str, filter_by: Literal['working', "all", 'resi
     """
     equity = TCBSCompany(symbol=symbol)
     df = equity.officers(filter_by=filter_by)
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_company_subsidiaries(symbol: str, filter_by: Literal["all", "subsidiary"] = "all", output_format: Literal['json', 'dataframe'] = 'json'):  # pyright: ignore[reportUndefinedVariable]
+def get_company_subsidiaries(
+    symbol: str,
+    filter_by: Literal["all", "subsidiary"] = "all",
+    output_format: Literal["json", "dataframe"] = "json",
+):  # pyright: ignore[reportUndefinedVariable]
     """
     Get company subsidiaries from stock market
     Args:
@@ -121,13 +149,16 @@ def get_company_subsidiaries(symbol: str, filter_by: Literal["all", "subsidiary"
     """
     equity = TCBSCompany(symbol=symbol)
     df = equity.subsidiaries(filter_by=filter_by)
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_company_reports(symbol: str, output_format: Literal['json', 'dataframe'] = 'json'):
+def get_company_reports(
+    symbol: str, output_format: Literal["json", "dataframe"] = "json"
+):
     """
     Get company reports from stock market
     Args:
@@ -138,13 +169,16 @@ def get_company_reports(symbol: str, output_format: Literal['json', 'dataframe']
     """
     equity = VCICompany(symbol=symbol)
     df = equity.reports()
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_company_dividends(symbol: str, output_format: Literal['json', 'dataframe'] = 'json'):
+def get_company_dividends(
+    symbol: str, output_format: Literal["json", "dataframe"] = "json"
+):
     """
     Get company dividends from stock market
     Args:
@@ -155,13 +189,16 @@ def get_company_dividends(symbol: str, output_format: Literal['json', 'dataframe
     """
     equity = TCBSCompany(symbol=symbol)
     df = equity.dividends()
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_company_insider_deals(symbol: str, output_format: Literal['json', 'dataframe'] = 'json'):
+def get_company_insider_deals(
+    symbol: str, output_format: Literal["json", "dataframe"] = "json"
+):
     """
     Get company insider deals from stock market
     Args:
@@ -172,13 +209,16 @@ def get_company_insider_deals(symbol: str, output_format: Literal['json', 'dataf
     """
     equity = TCBSCompany(symbol=symbol)
     df = equity.insider_deals()
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_company_ratio_summary(symbol: str, output_format: Literal['json', 'dataframe'] = 'json'):
+def get_company_ratio_summary(
+    symbol: str, output_format: Literal["json", "dataframe"] = "json"
+):
     """
     Get company ratio summary from stock market
     Args:
@@ -189,13 +229,16 @@ def get_company_ratio_summary(symbol: str, output_format: Literal['json', 'dataf
     """
     equity = VCICompany(symbol=symbol)
     df = equity.ratio_summary()
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_company_trading_stats(symbol: str, output_format: Literal['json', 'dataframe'] = 'json'):
+def get_company_trading_stats(
+    symbol: str, output_format: Literal["json", "dataframe"] = "json"
+):
     """
     Get company trading stats from stock market
     Args:
@@ -206,15 +249,15 @@ def get_company_trading_stats(symbol: str, output_format: Literal['json', 'dataf
     """
     equity = VCICompany(symbol=symbol)
     df = equity.trading_stats()
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
 
 ##### Listing Tools #####
 @server.tool()
-def get_all_symbol_groups(output_format: Literal['json', 'dataframe'] = 'json'):
+def get_all_symbol_groups(output_format: Literal["json", "dataframe"] = "json"):
     """
     Get all symbol groups from stock market
     Args:
@@ -222,82 +265,35 @@ def get_all_symbol_groups(output_format: Literal['json', 'dataframe'] = 'json'):
     Returns:
         pd.DataFrame
     """
-    df = pd.DataFrame([{
-        'group': 'HOSE',
-        'group_name': 'All symbols in HOSE'
-    },
-    {   
-        'group': 'HNX',
-        'group_name': 'All symbols in HNX'
-    },
-    {
-        'group': 'UPCOM',
-        'group_name': 'All symbols in UPCOM'
-    },
-    {
-        'group': 'VN30',
-        'group_name': 'All symbols in VN30'
-    },
-    {
-        'group': 'VN100',
-        'group_name': 'All symbols in VN100'
-    },
-    {
-        'group': 'HNX30',
-        'group_name': 'All symbols in HNX30'
-    },
-    {
-        'group': 'VNMidCap',
-        'group_name': 'All symbols in VNMidCap'
-    },
-    {
-        'group': 'VNSmallCap',
-        'group_name': 'All symbols in VNSmallCap'
-    },
-    {
-        'group': 'VNAllShare',
-        'group_name': 'All symbols in VNAllShare'
-    },
-    {
-        'group': 'HNXCon',
-        'group_name': 'All symbols in HNXCon'
-    },
-    {
-        'group': 'HNXFin',
-        'group_name': 'All symbols in HNXFin'
-    },
-    {
-        'group': 'HNXLCap',
-        'group_name': 'All symbols in HNXLCap'
-    },
-    {
-        'group': 'HNXMSCap',
-        'group_name': 'All symbols in HNXMSCap'
-    },
-    {
-        'group': 'HNXMan',
-        'group_name': 'All symbols in HNXMan'
-    },
-    {
-        'group': 'ETF',
-        'group_name': 'All symbols in ETF'
-    },
-    {
-        'group': 'FU_INDEX',
-        'group_name': 'All symbols in FU_INDEX'
-    },
-    {
-        'group': 'CW',
-        'group_name': 'All symbols in CW'
-    }
-    ])
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    df = pd.DataFrame(
+        [
+            {"group": "HOSE", "group_name": "All symbols in HOSE"},
+            {"group": "HNX", "group_name": "All symbols in HNX"},
+            {"group": "UPCOM", "group_name": "All symbols in UPCOM"},
+            {"group": "VN30", "group_name": "All symbols in VN30"},
+            {"group": "VN100", "group_name": "All symbols in VN100"},
+            {"group": "HNX30", "group_name": "All symbols in HNX30"},
+            {"group": "VNMidCap", "group_name": "All symbols in VNMidCap"},
+            {"group": "VNSmallCap", "group_name": "All symbols in VNSmallCap"},
+            {"group": "VNAllShare", "group_name": "All symbols in VNAllShare"},
+            {"group": "HNXCon", "group_name": "All symbols in HNXCon"},
+            {"group": "HNXFin", "group_name": "All symbols in HNXFin"},
+            {"group": "HNXLCap", "group_name": "All symbols in HNXLCap"},
+            {"group": "HNXMSCap", "group_name": "All symbols in HNXMSCap"},
+            {"group": "HNXMan", "group_name": "All symbols in HNXMan"},
+            {"group": "ETF", "group_name": "All symbols in ETF"},
+            {"group": "FU_INDEX", "group_name": "All symbols in FU_INDEX"},
+            {"group": "CW", "group_name": "All symbols in CW"},
+        ]
+    )
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_all_industries(output_format: Literal['json', 'dataframe'] = 'json'):
+def get_all_industries(output_format: Literal["json", "dataframe"] = "json"):
     """
     Get all symbols from stock market
     Args:
@@ -307,13 +303,16 @@ def get_all_industries(output_format: Literal['json', 'dataframe'] = 'json'):
     """
     listing = VCIListing()
     df = listing.industries_icb()
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_all_symbols_by_group(group: str, output_format: Literal['json', 'dataframe'] = 'json'):
+def get_all_symbols_by_group(
+    group: str, output_format: Literal["json", "dataframe"] = "json"
+):
     """
     Get all symbols from stock market
     Args:
@@ -324,13 +323,16 @@ def get_all_symbols_by_group(group: str, output_format: Literal['json', 'datafra
     """
     listing = VCIListing()
     df = listing.symbols_by_group(group=group)
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_all_symbols_by_industry(industry: str = None, output_format: Literal['json', 'dataframe'] = 'json'):
+def get_all_symbols_by_industry(
+    industry: str = None, output_format: Literal["json", "dataframe"] = "json"
+):
     """
     Get all symbols from stock market
     Args:
@@ -342,7 +344,7 @@ def get_all_symbols_by_industry(industry: str = None, output_format: Literal['js
     listing = VCIListing()
     df = listing.symbols_by_industries()
     if industry:
-        codes = ['icb_code1', 'icb_code2', 'icb_code3', 'icb_code4']
+        codes = ["icb_code1", "icb_code2", "icb_code3", "icb_code4"]
         masks = []
         for col in codes:
             if col in df.columns:
@@ -352,13 +354,14 @@ def get_all_symbols_by_industry(industry: str = None, output_format: Literal['js
             for m in masks[1:]:
                 mask = mask | m
             df = df[mask]
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_all_symbols(output_format: Literal['json', 'dataframe'] = 'json'):
+def get_all_symbols(output_format: Literal["json", "dataframe"] = "json"):
     """
     Get all symbols from stock market
     Args:
@@ -368,18 +371,24 @@ def get_all_symbols(output_format: Literal['json', 'dataframe'] = 'json'):
     """
     listing = VCIListing()
     df = listing.symbols_by_exchange()
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 ##### Finance Tools #####
 
+
 @server.tool()
-def get_income_statements(symbol: str, period: Literal['quarter', 'year'] = 'year', output_format: Literal['json', 'dataframe'] = 'json'):
+def get_income_statements(
+    symbol: str,
+    period: Literal["quarter", "year"] = "year",
+    output_format: Literal["json", "dataframe"] = "json",
+):
     """
     Get income statements of a company from stock market
-    Args:   
+    Args:
         symbol: str (symbol of the company to get income statements)
         period: Literal['quarter', 'year'] = 'year' (period to get income statements)
         output_format: Literal['json', 'dataframe'] = 'json'
@@ -388,13 +397,18 @@ def get_income_statements(symbol: str, period: Literal['quarter', 'year'] = 'yea
     """
     finance = VCIFinance(symbol=symbol, period=period)
     df = finance.income_statement()
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_balance_sheets(symbol: str, period: Literal['quarter', 'year'] = 'year', output_format: Literal['json', 'dataframe'] = 'json'):  # pyright: ignore[reportUndefinedVariable]
+def get_balance_sheets(
+    symbol: str,
+    period: Literal["quarter", "year"] = "year",
+    output_format: Literal["json", "dataframe"] = "json",
+):  # pyright: ignore[reportUndefinedVariable]
     """
     Get balance sheets of a company from stock market
     Args:
@@ -406,13 +420,18 @@ def get_balance_sheets(symbol: str, period: Literal['quarter', 'year'] = 'year',
     """
     finance = VCIFinance(symbol=symbol, period=period)
     df = finance.balance_sheet()
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_cash_flows(symbol: str, period: Literal['quarter', 'year'] = 'year', output_format: Literal['json', 'dataframe'] = 'json'):  # pyright: ignore[reportUndefinedVariable]
+def get_cash_flows(
+    symbol: str,
+    period: Literal["quarter", "year"] = "year",
+    output_format: Literal["json", "dataframe"] = "json",
+):  # pyright: ignore[reportUndefinedVariable]
     """
     Get cash flows of a company from stock market
     Args:
@@ -426,8 +445,13 @@ def get_cash_flows(symbol: str, period: Literal['quarter', 'year'] = 'year', out
     df = finance.cash_flow()
     return df
 
+
 @server.tool()
-def get_finance_ratios(symbol: str, period: Literal['quarter', 'year'] = 'year', output_format: Literal['json', 'dataframe'] = 'json'):  # pyright: ignore[reportUndefinedVariable]
+def get_finance_ratios(
+    symbol: str,
+    period: Literal["quarter", "year"] = "year",
+    output_format: Literal["json", "dataframe"] = "json",
+):  # pyright: ignore[reportUndefinedVariable]
     """
     Get finance ratios of a company from stock market
     Args:
@@ -439,13 +463,18 @@ def get_finance_ratios(symbol: str, period: Literal['quarter', 'year'] = 'year',
     """
     finance = VCIFinance(symbol=symbol, period=period)
     df = finance.ratio()
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_raw_report(symbol: str, period: Literal['quarter', 'year'] = 'year', output_format: Literal['json', 'dataframe'] = 'json'):  # pyright: ignore[reportUndefinedVariable]
+def get_raw_report(
+    symbol: str,
+    period: Literal["quarter", "year"] = "year",
+    output_format: Literal["json", "dataframe"] = "json",
+):  # pyright: ignore[reportUndefinedVariable]
     """
     Get raw report of a company from stock market
     Args:
@@ -456,16 +485,21 @@ def get_raw_report(symbol: str, period: Literal['quarter', 'year'] = 'year', out
         pd.DataFrame
     """
     finance = VCIFinance(symbol=symbol, period=period)
-    df = finance._get_report(mode='raw')
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    df = finance._get_report(mode="raw")
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 ##### Fund Tools #####
 
+
 @server.tool()
-def list_all_funds(fund_type: Literal['BALANCED', 'BOND', 'STOCK', None ] = None, output_format: Literal['json', 'dataframe'] = 'json'):  # pyright: ignore[reportUndefinedVariable]
+def list_all_funds(
+    fund_type: Literal["BALANCED", "BOND", "STOCK", None] = None,
+    output_format: Literal["json", "dataframe"] = "json",
+):  # pyright: ignore[reportUndefinedVariable]
     """
     List all funds from stock market
     Args:
@@ -476,13 +510,14 @@ def list_all_funds(fund_type: Literal['BALANCED', 'BOND', 'STOCK', None ] = None
     """
     fund = FMarketFund()
     df = fund.listing(fund_type=fund_type)
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def search_fund(keyword: str, output_format: Literal['json', 'dataframe'] = 'json'):
+def search_fund(keyword: str, output_format: Literal["json", "dataframe"] = "json"):
     """
     Search fund by name from stock market
     Args:
@@ -493,13 +528,16 @@ def search_fund(keyword: str, output_format: Literal['json', 'dataframe'] = 'jso
     """
     fund = FMarketFund()
     df = fund.filter(symbol=keyword)
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_fund_nav_report(symbol: str, output_format: Literal['json', 'dataframe'] = 'json'):
+def get_fund_nav_report(
+    symbol: str, output_format: Literal["json", "dataframe"] = "json"
+):
     """
     Get nav report of a fund from stock market
     Args:
@@ -510,13 +548,16 @@ def get_fund_nav_report(symbol: str, output_format: Literal['json', 'dataframe']
     """
     fund = FMarketFund()
     df = fund.details.nav_report(symbol=symbol)
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_fund_top_holding(symbol: str, output_format: Literal['json', 'dataframe'] = 'json'):
+def get_fund_top_holding(
+    symbol: str, output_format: Literal["json", "dataframe"] = "json"
+):
     """
     Get top holding of a fund from stock market
     Args:
@@ -527,13 +568,16 @@ def get_fund_top_holding(symbol: str, output_format: Literal['json', 'dataframe'
     """
     fund = FMarketFund()
     df = fund.details.top_holding(symbol=symbol)
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_fund_industry_holding(symbol: str, output_format: Literal['json', 'dataframe'] = 'json'):
+def get_fund_industry_holding(
+    symbol: str, output_format: Literal["json", "dataframe"] = "json"
+):
     """
     Get industry holding of a fund from stock market
     Args:
@@ -544,13 +588,16 @@ def get_fund_industry_holding(symbol: str, output_format: Literal['json', 'dataf
     """
     fund = FMarketFund()
     df = fund.details.industry_holding(symbol=symbol)
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_fund_asset_holding(symbol: str, output_format: Literal['json', 'dataframe'] = 'json'):
+def get_fund_asset_holding(
+    symbol: str, output_format: Literal["json", "dataframe"] = "json"
+):
     """
     Get asset holding of a fund from stock market
     Args:
@@ -561,15 +608,21 @@ def get_fund_asset_holding(symbol: str, output_format: Literal['json', 'datafram
     """
     fund = FMarketFund()
     df = fund.details.asset_holding(symbol=symbol)
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 ##### MISC Tools #####
 
+
 @server.tool()
-def get_gold_price(date: str = None, source: Literal['SJC', 'BTMC'] = 'SJC', output_format: Literal['json', 'dataframe'] = 'json'):  # pyright: ignore[reportUndefinedVariable]  # noqa: F821
+def get_gold_price(
+    date: str = None,
+    source: Literal["SJC", "BTMC"] = "SJC",
+    output_format: Literal["json", "dataframe"] = "json",
+):  # pyright: ignore[reportUndefinedVariable]  # noqa: F821
     """
     Get gold price from stock market
     Args:
@@ -581,19 +634,22 @@ def get_gold_price(date: str = None, source: Literal['SJC', 'BTMC'] = 'SJC', out
     """
     if date:
         price = sjc_gold_price(date=date)
-        if output_format == 'json':
-            return price.to_json(orient='records', force_ascii=False)
+        if output_format == "json":
+            return price.to_json(orient="records", force_ascii=False)
         else:
             return price
     else:
-        price = sjc_gold_price() if source == 'SJC' else btmc_goldprice()
-        if output_format == 'json':
-            return price.to_json(orient='records', force_ascii=False)
+        price = sjc_gold_price() if source == "SJC" else btmc_goldprice()
+        if output_format == "json":
+            return price.to_json(orient="records", force_ascii=False)
         else:
             return price
 
+
 @server.tool()
-def get_exchange_rate(date: str = None, output_format: Literal['json', 'dataframe'] = 'json'):
+def get_exchange_rate(
+    date: str = None, output_format: Literal["json", "dataframe"] = "json"
+):
     """
     Get exchange rate of all currency pairs from stock market
     Args:
@@ -603,17 +659,25 @@ def get_exchange_rate(date: str = None, output_format: Literal['json', 'datafram
         pd.DataFrame
     """
     if not date:
-        date = datetime.now().strftime('%Y-%m-%d')
+        date = datetime.now().strftime("%Y-%m-%d")
     price = vcb_exchange_rate(date=date)
-    if output_format == 'json':
-        return price.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return price.to_json(orient="records", force_ascii=False)
     else:
         return price
 
+
 ##### Quote Tools #####
 
+
 @server.tool()
-def get_quote_history_price(symbol: str, start_date: str, end_date: str = None, interval: Literal['1m', '5m', '15m', '30m', '1H', '1D', '1W', '1M'] = '1D', output_format: Literal['json', 'dataframe'] = 'json'):  # pyright: ignore[reportUndefinedVariable]  # noqa: F722
+def get_quote_history_price(
+    symbol: str,
+    start_date: str,
+    end_date: str = None,
+    interval: Literal["1m", "5m", "15m", "30m", "1H", "1D", "1W", "1M"] = "1D",
+    output_format: Literal["json", "dataframe"] = "json",
+):  # pyright: ignore[reportUndefinedVariable]  # noqa: F722
     """
     Get quote price history of a symbol from stock market
     Args:
@@ -625,15 +689,25 @@ def get_quote_history_price(symbol: str, start_date: str, end_date: str = None, 
     Returns:
         pd.DataFrame
     """
-    quote = Quote(symbol=symbol, source='VCI')
-    df = quote.history(start_date=start_date, end_date=end_date or datetime.now().strftime('%Y-%m-%d'), interval=interval)
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    quote = Quote(symbol=symbol, source="VCI")
+    df = quote.history(
+        start_date=start_date,
+        end_date=end_date or datetime.now().strftime("%Y-%m-%d"),
+        interval=interval,
+    )
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_quote_intraday_price(symbol: str, page_size: int = 100, last_time: str = None, output_format: Literal['json', 'dataframe'] = 'json'):
+def get_quote_intraday_price(
+    symbol: str,
+    page_size: int = 100,
+    last_time: str = None,
+    output_format: Literal["json", "dataframe"] = "json",
+):
     """
     Get quote intraday price from stock market
     Args:
@@ -644,15 +718,18 @@ def get_quote_intraday_price(symbol: str, page_size: int = 100, last_time: str =
     Returns:
         pd.DataFrame
     """
-    quote = Quote(symbol=symbol, source='VCI')
+    quote = Quote(symbol=symbol, source="VCI")
     df = quote.intraday(page_size=page_size, last_time=last_time)
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 @server.tool()
-def get_quote_price_depth(symbol: str, output_format: Literal['json', 'dataframe'] = 'json'):
+def get_quote_price_depth(
+    symbol: str, output_format: Literal["json", "dataframe"] = "json"
+):
     """
     Get quote price depth from stock market
     Args:
@@ -661,17 +738,21 @@ def get_quote_price_depth(symbol: str, output_format: Literal['json', 'dataframe
     Returns:
         pd.DataFrame
     """
-    quote = Quote(symbol=symbol, source='VCI')
+    quote = Quote(symbol=symbol, source="VCI")
     df = quote.price_depth()
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
+
 ##### Trading Tools #####
 
+
 @server.tool()
-def get_price_board(symbols: list[str], output_format: Literal['json', 'dataframe'] = 'json'):
+def get_price_board(
+    symbols: list[str], output_format: Literal["json", "dataframe"] = "json"
+):
     """
     Get price board from stock market
     Args:
@@ -682,8 +763,8 @@ def get_price_board(symbols: list[str], output_format: Literal['json', 'datafram
     """
     trading = VCITrading()
     df = trading.price_board(symbols_list=symbols)
-    if output_format == 'json':
-        return df.to_json(orient='records', force_ascii=False)
+    if output_format == "json":
+        return df.to_json(orient="records", force_ascii=False)
     else:
         return df
 
@@ -691,7 +772,7 @@ def get_price_board(symbols: list[str], output_format: Literal['json', 'datafram
 def main():
     """Main entry point for the vnstock-mcp-server CLI."""
     parser = argparse.ArgumentParser(
-        description='VNStock MCP Server - Vietnam Stock Market Data Access via MCP',
+        description="VNStock MCP Server - Vietnam Stock Market Data Access via MCP",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
             Examples:
@@ -705,46 +786,53 @@ def main():
             stdio          : Standard input/output (default, for MCP clients like Claude Desktop)
             sse            : Server-Sent Events (for web applications)
             streamable-http: HTTP streaming (for HTTP-based integrations)
-        """
+        """,
     )
-    
+
     parser.add_argument(
-        '--transport', '-t',
-        choices=['stdio', 'sse', 'streamable-http'],
-        default='stdio',
-        help='Transport protocol to use (default: stdio)'
+        "--transport",
+        "-t",
+        choices=["stdio", "sse", "streamable-http"],
+        default="stdio",
+        help="Transport protocol to use (default: stdio)",
     )
-    
+
     parser.add_argument(
-        '--mount-path', '-m',
+        "--mount-path",
+        "-m",
         type=str,
         default=None,
-        help='Mount path for SSE transport (optional, used only with --transport sse)'
+        help="Mount path for SSE transport (optional, used only with --transport sse)",
     )
-    
-    parser.add_argument(
-        '--version', '-v',
-        action='version',
-        version='%(prog)s 1.0.0'
-    )
-    
+
+    parser.add_argument("--version", "-v", action="version", version="%(prog)s 1.0.0")
+
     try:
         args = parser.parse_args()
-        
+
         # Validate arguments
-        if args.transport == 'sse' and args.mount_path is None:
-            print("Warning: Using SSE transport without mount-path. Default mount path will be used.", file=sys.stderr)
-        
-        if args.transport != 'sse' and args.mount_path is not None:
-            print("Warning: --mount-path is only used with SSE transport. Ignoring mount-path.", file=sys.stderr)
-        
+        if args.transport == "sse" and args.mount_path is None:
+            print(
+                "Warning: Using SSE transport without mount-path. Default mount path will be used.",
+                file=sys.stderr,
+            )
+
+        if args.transport != "sse" and args.mount_path is not None:
+            print(
+                "Warning: --mount-path is only used with SSE transport. Ignoring mount-path.",
+                file=sys.stderr,
+            )
+
         # Run server with specified transport
-        print(f"Starting VNStock MCP Server with {args.transport} transport...", file=sys.stderr)
-        if args.transport == 'sse' and args.mount_path:
+        print(
+            f"Starting VNStock MCP Server with {args.transport} transport...",
+            file=sys.stderr,
+        )
+        if args.transport == "sse" and args.mount_path:
             print(f"SSE mount path: {args.mount_path}", file=sys.stderr)
-        
+
         server.run(transport=args.transport, mount_path=args.mount_path)
-        
+
     except KeyboardInterrupt:
         print("\nServer stopped by user.", file=sys.stderr)
         sys.exit(0)
