@@ -837,9 +837,44 @@ def main():
         if args.transport == "sse" and args.mount_path:
             print(f"SSE mount path: {args.mount_path}", file=sys.stderr)
 
-        # FastMCP uses uvicorn internally, set environment variables for uvicorn
-        os.environ["HOST"] = host
-        os.environ["PORT"] = str(port)
+        # FastMCP uses uvicorn internally, we need to patch uvicorn to use host/port
+        # For streamable-http and sse transports, patch uvicorn at multiple levels
+        if args.transport in ["sse", "streamable-http"]:
+            import uvicorn
+            from uvicorn.config import Config
+            from uvicorn.server import Server
+
+            # Patch uvicorn.run() function
+            original_uvicorn_run = uvicorn.run
+
+            def patched_uvicorn_run(app, **kwargs):
+                kwargs["host"] = host
+                kwargs["port"] = port
+                return original_uvicorn_run(app, **kwargs)
+
+            uvicorn.run = patched_uvicorn_run
+
+            # Patch Config.__init__ to force host and port
+            original_config_init = Config.__init__
+
+            def patched_config_init(self, app, **kwargs):
+                kwargs["host"] = host
+                kwargs["port"] = port
+                return original_config_init(self, app, **kwargs)
+
+            Config.__init__ = patched_config_init
+
+            # Also patch Server.__init__ as backup
+            original_server_init = Server.__init__
+
+            def patched_server_init(self, config, **kwargs):
+                if hasattr(config, "host"):
+                    config.host = host
+                if hasattr(config, "port"):
+                    config.port = port
+                return original_server_init(self, config, **kwargs)
+
+            Server.__init__ = patched_server_init
 
         server.run(transport=args.transport, mount_path=args.mount_path)
 
